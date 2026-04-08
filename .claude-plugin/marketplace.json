@@ -1,0 +1,18 @@
+{
+  "name": "team-skills",
+  "description": "Go 项目团队协作开发 Skills — 8 角色协同体系（PM/Tech Lead/Architect/DBA/Backend/Frontend/Reviewer/DevOps）。支持新项目、新功能、维护三种模式。",
+  "owner": {
+    "name": "aikzy"
+  },
+  "plugins": [
+    {
+      "name": "team",
+      "description": "Go 项目团队协作开发 — 9 个 Skills（team/architect/backend/frontend/devops/reviewer/pm/tech-lead/dba），三种工作模式，质量红线。",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "aikzy"
+      }
+    }
+  ]
+}
