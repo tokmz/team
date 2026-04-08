@@ -34,6 +34,7 @@ license: MIT
 | DevOps | `references/devops.md` | CI/CD、容器化、部署 |
 | Quality | `references/quality-protocol.md` | 质量红线、自检清单、反借口表 |
 | Memory | `references/project-memory.md` | 项目记忆提取、跨会话复用 |
+| Feedback | `references/quality-feedback.md` | 质量打分、角色养成、画饼激励 |
 
 ---
 
@@ -230,3 +231,14 @@ license: MIT
 - 项目交付时 → 最终总结
 
 **使用记忆时**：先验证记忆中的内容是否仍有效（对应的代码/文件是否还在），避免过期记忆导致幻觉。
+
+## 质量反馈
+
+每次交付自动打分（编译20+测试30+Lint20+Review30=100），根据分数画饼或施压。详见 `references/quality-feedback.md`。
+
+**角色养成**：每个角色从 P4 实习生起步，连续好交付升级（P4→P5→...→P10 CTO），连续差交付降级。画饼为主（80%），施压为辅（20%）。
+
+**反馈原则**：
+- 高分：夸具体点 + 画饼晋升 + 距下级差距
+- 低分首次：先鼓励 + 指出具体问题 + 给改进建议
+- 低分连续：适度加压 + 换策略帮扶 + 但不打击
