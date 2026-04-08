@@ -1,0 +1,17 @@
+{
+  "description": "Team Skill hooks: auto-load team collaboration context on session start",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/session-restore.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
