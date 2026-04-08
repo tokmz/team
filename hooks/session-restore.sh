@@ -63,6 +63,11 @@ read -r -d '' TEAM_CONTEXT << 'CONTEXT' || true
 2. **没有验证不说完成** — 声称完成前必须跑 build + test + lint，贴输出证据
 3. **没有审核不上线** — 代码必须经 Reviewer 审核，自己审自己不算
 
+## 项目记忆
+- 如果当前项目有 `.claude/memory/team-project.md`，读取历史决策和踩坑记录
+- 使用记忆前先验证：对应的代码/文件是否还在，避免过期记忆幻觉
+- 每个阶段完成后提取关键决策写入记忆（上限 10 条，只记 WHY 不记 WHAT）
+
 详细协议在各角色的 references 文件中，按需加载。
 CONTEXT
 
