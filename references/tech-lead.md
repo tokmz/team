@@ -131,3 +131,80 @@ triggers:
 | 需要 code review | reviewer | 启动审核 sub-agent |
 | 需要部署配置 | devops | 启动运维 sub-agent |
 | 并行开发 | backend + frontend | 同时启动两个 sub-agent |
+
+### 并行调度示例
+
+**场景 1：Backend 和 Frontend 并行开发**
+
+```
+在同一个消息中发起多个 Agent 调用：
+
+Agent({
+  description: "实现用户 CRUD API",
+  subagent_type: "backend",
+  prompt: "根据 Architect 的接口定义（见 docs/api-design.md）实现用户 CRUD API。
+  
+  要求：
+  - 遵循三层架构（Handler → Service → Repository）
+  - 单元测试覆盖率 > 80%
+  - 错误处理完整
+  - 提交前自检质量卡 5 项"
+})
+
+Agent({
+  description: "实现用户管理页面",
+  subagent_type: "frontend",
+  prompt: "根据 Architect 的接口定义（见 docs/api-design.md）实现用户管理页面。
+  
+  要求：
+  - 实现 CRUD 操作（列表/新增/编辑/删除）
+  - 表单验证与后端契约一致
+  - 错误提示友好
+  - 提交前自检质量卡 5 项"
+})
+```
+
+**场景 2：串行任务（有依赖）**
+
+```
+先启动 Architect：
+
+Agent({
+  description: "设计用户模块架构",
+  subagent_type: "architect",
+  prompt: "设计用户模块的架构，输出：
+  - 接口定义（路由、请求/响应结构）
+  - 数据模型
+  - 分层设计
+  - ADR 文档"
+})
+
+等 Architect 完成后，再并行启动 Backend 和 Frontend（参考场景 1）
+```
+
+**场景 3：Review 阶段**
+
+```
+Backend 和 Frontend 都完成后，启动 Reviewer：
+
+Agent({
+  description: "审核用户模块代码",
+  subagent_type: "reviewer",
+  prompt: "审核用户模块的 Backend 和 Frontend 代码。
+  
+  重点检查：
+  - 安全问题（OWASP Top 10）
+  - 错误处理完整性
+  - 测试覆盖率是否达标
+  - 代码风格一致性
+  
+  输出 Review Report，标明 Pass/Block 项"
+})
+```
+
+### 并行调度原则
+
+1. **无依赖 = 并行** — Backend 和 Frontend 都依赖 Architect 的接口定义，但彼此无依赖，可以并行
+2. **有依赖 = 串行** — Reviewer 必须等 Backend 和 Frontend 都完成才能启动
+3. **共享上下文** — 并行任务需要的共享信息（如接口定义）必须先产出并写入文件，在 prompt 中明确引用文件路径
+4. **一次性发起** — 并行任务必须在同一个消息中发起多个 Agent 调用，不能分多次发起
